@@ -10,4 +10,4 @@
 #include <netinet/in.h>
 
 void mac(uint8_t* macAddr);
-char *read_data(const u_char* packet, uint8_t ip_size, uint8_t ip_hsize, uint8_t tcp_off);
+void read_data(const u_char* packet, uint8_t ip_size, uint8_t ip_hsize, uint8_t tcp_off);

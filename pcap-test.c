@@ -50,15 +50,14 @@ int main(int argc, char* argv[]) {
 		}
         struct libnet_ethernet_hdr* ethHeader = (struct libnet_ethernet_hdr*)packet;
         struct libnet_ipv4_hdr* ipv4Header = (struct libnet_ipv4_hdr*)(sizeof(struct libnet_ethernet_hdr) + packet);
-        struct libnet_tcp_hdr* tcpHeader = (struct libnet_tcp_hdr*)(packet + sizeof(struct libnet_ethernet_hdr) + (ipv4Header->ip_hl * 4));
+        struct libnet_tcp_hdr* tcpHeader = (struct libnet_tcp_hdr*)(packet + sizeof(struct libnet_ethernet_hdr) + (ipv4Header->ip_len));
 
         if(ipv4Header->ip_p == 6){
             printf("\n%u bytes captured\n", header->caplen);
             printf("Src MAC: "); mac(ethHeader->ether_shost); printf("\nDst MAC: "); mac(ethHeader->ether_dhost);
             printf("\nSrc IP: %s",inet_ntoa(ipv4Header->ip_src)); printf("\nSrc IP: %s",inet_ntoa(ipv4Header->ip_dst));
             printf("\nSrc Port: %d\nDST Port: %d\n",ntohs(tcpHeader->th_sport),ntohs(tcpHeader->th_dport));
-
-            printf("Payload Data:\n%s\n",read_data(packet, ipv4Header->ip_len, ipv4Header->ip_hl*4, tcpHeader->th_off*4));
+            read_data(packet, ipv4Header->ip_len, ipv4Header->ip_hl*4, tcpHeader->th_off);
 
         }
 
