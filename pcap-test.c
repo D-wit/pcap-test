@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
             printf("Src MAC: "); mac(ethHeader->ether_shost); printf("\nDst MAC: "); mac(ethHeader->ether_dhost);
             printf("\nSrc IP: %s",inet_ntoa(ipv4Header->ip_src)); printf("\nSrc IP: %s",inet_ntoa(ipv4Header->ip_dst));
             printf("\nSrc Port: %d\nDST Port: %d\n",ntohs(tcpHeader->th_sport),ntohs(tcpHeader->th_dport));
-            read_data(packet, ipv4Header->ip_len, ipv4Header->ip_hl*4, tcpHeader->th_off);
+            read_data(packet, ipv4Header->ip_len, ipv4Header->ip_hl << 2 , tcpHeader->th_off << 2);
 
         }
 
